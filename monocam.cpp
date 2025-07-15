@@ -28,12 +28,14 @@ int main(int argc, char* argv[])
   app = Gtk::Application::create("org.Sora3e8.MonoCAM");
   app->signal_activate().connect(&on_activate);
   app->run(argc,argv);
-  std::cout << "Got past here!" << std::endl;
+  cam->stop_stream();
+  std::cout << "Program exiting..." << std::endl;
 
   // Release memory
   delete cam_window;
   cam_window = nullptr;
-  // Release memory
 
+  // Release memory
+  
   return 0;
 }
