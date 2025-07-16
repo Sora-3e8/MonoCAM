@@ -1,3 +1,4 @@
+#include <opencv2/core/mat.hpp>
 #include <gtkmm.h>
 #include <bits/stdc++.h>
 #include <string>
@@ -15,8 +16,16 @@ public:
     Glib::RefPtr<Gdk::Pixbuf> image_nocam;
     CamWindow();
 
+    void set_feed_source(cv::Mat *source);
+
   protected:
     void on_btn_clicked();
+    bool update_feed();
+
+  private:
+    cv::Mat *image_source;
+    Glib::RefPtr<Gdk::Pixbuf> image_buffer;
+
 
 };
 

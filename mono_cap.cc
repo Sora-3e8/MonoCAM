@@ -3,10 +3,34 @@
 #include <iostream>
 #include "mono_cap.h"
 
-camera_stream::camera_stream(int id=NULL, int width=NULL, int height=NULL, int fps = NULL)
+
+std::string OsName()
+{
+    #ifdef _WIN32
+    return "Windows 32-bit";
+    #elif _WIN64
+    return "Windows 64-bit";
+    #elif __APPLE__ || __MACH__
+    return "Mac OSX";
+    #elif __linux__
+    return "Linux";
+    #elif __FreeBSD__
+    return "FreeBSD";
+    #elif __unix || __unix__
+    return "Unix";
+    #else
+    return "Other";
+    #endif
+}
+
+camera_stream::camera_stream(int id=0, int width = 480, int height = 360, int fps = 30)
 {
   device = cv::VideoCapture();
-  device_id = (id == NULL) ? id : device_id;
+  device_index = id; 
+  capture_width = width;
+  capture_height = height;
+  capture_fps = fps;
+  cam_backend = (OsName() != "Linux") ? cv::CAP_ANY : cv::CAP_V4L2;
 }
 
 void camera_stream::start_stream()
@@ -30,19 +54,22 @@ void camera_stream::frame_loop()
   while(_keep_frame_loop)
   {
     // Attempts to open camera by device_id 
-    try { device.open(device_id,cv::CAP_ANY); }
+    try { device.open(device_index,cv::CAP_V4L2); }
     catch(std::exception &e){ std::cout << "Could not open the device:" << '\n' << e.what() << std::endl; }
     
     // Starts if 
     while(device.isOpened())
     {
       device.read(_frame);
-      if(frame.empty()){ break; }
+      if(_frame.empty()){ break; }
       else
       {
-        cv::cvtColor(_frame.clone(),frame, cv::COLOR_BGR2RGB);
+        cv::Mat mirrored;
+        cv::flip(_frame,mirrored,1);
+        cv::cvtColor(mirrored.clone(),frame, cv::COLOR_BGR2RGB);
       }
     }
+  std::cout << "Device closed" << std::endl;
   std::this_thread::sleep_for(std::chrono::milliseconds(500));
  }
 }

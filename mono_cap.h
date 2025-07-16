@@ -6,16 +6,16 @@ class camera_stream
 {
   public:
     camera_stream(int id, int width, int height, int fps);
-
-    cv::Mat frame;
     void start_stream();
     void stop_stream();
+    cv::Mat frame;
 
   private:
     int capture_fps;
     int capture_width;
     int capture_height;
-    int device_id;
+    int device_index;
+    int cam_backend;
     bool _keep_frame_loop = false;
     cv::VideoCapture device;
     cv::Mat _frame;
