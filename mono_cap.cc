@@ -54,7 +54,7 @@ void camera_stream::frame_loop()
   while(_keep_frame_loop)
   {
     // Attempts to open camera by device_id 
-    try { device.open(device_index,cv::CAP_V4L2); }
+    try { device.open(device_index,cam_backend); }
     catch(std::exception &e){ std::cout << "Could not open the device:" << '\n' << e.what() << std::endl; }
     
     // Starts if 

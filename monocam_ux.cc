@@ -46,7 +46,10 @@ CamWindow::CamWindow()
   Glib::signal_timeout().connect(sigc::mem_fun(*this,&CamWindow::update_feed),16);
   // Add widgets to the layout
 }
+CamWindow::~CamWindow()
+{
 
+}
 void CamWindow::set_feed_source(cv::Mat* source)
 {
   image_source = source;

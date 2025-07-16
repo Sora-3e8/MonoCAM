@@ -15,6 +15,7 @@ public:
     Gtk::Picture cam_view;
     Glib::RefPtr<Gdk::Pixbuf> image_nocam;
     CamWindow();
+    ~CamWindow() override;
 
     void set_feed_source(cv::Mat *source);
 
