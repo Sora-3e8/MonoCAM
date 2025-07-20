@@ -1,13 +1,17 @@
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/core/hal/interface.h>
 #include <sigc++/sigc++.h>
+#include <opencv2/imgcodecs.hpp>
+
 class camera_stream
 {
   public:
     camera_stream(int id, int width, int height, int fps);
     void start_stream();
     void stop_stream();
+    bool save_image(std::string filepath);
     cv::Mat frame;
 
   private:

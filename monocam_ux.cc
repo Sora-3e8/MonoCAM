@@ -42,14 +42,12 @@ CamWindow::CamWindow()
   overlay_container.append(photo_button);
   set_child(overlay_layer);
   photo_button.signal_clicked().connect(sigc::mem_fun(*this,&CamWindow::on_btn_clicked));
-  //sigc::slot<bool> t_out = sigc::ptr_fun(&update_feed); 
   Glib::signal_timeout().connect(sigc::mem_fun(*this,&CamWindow::update_feed),16);
   // Add widgets to the layout
 }
-CamWindow::~CamWindow()
-{
 
-}
+CamWindow::~CamWindow(){}
+
 void CamWindow::set_feed_source(cv::Mat* source)
 {
   image_source = source;
@@ -61,15 +59,14 @@ bool CamWindow::update_feed()
   {
     auto image_src = *image_source;
     image_buffer = Gdk::Pixbuf::create_from_data(image_src.data, Gdk::Colorspace::RGB,false, 8, image_src.cols, image_src.rows, image_src.step);
-    cam_view.set_pixbuf(image_buffer);
-   
+    cam_view.set_pixbuf(image_buffer); 
   }
-  return true;
-}
+  else
+  {
+    cam_view.set_pixbuf(image_nocam);
+  }
 
-void CamWindow::on_btn_clicked()
-{
-  std::cout << "Hi thewe 0w0." <<std::endl;
+  return true;
 }
 
 
