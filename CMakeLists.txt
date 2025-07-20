@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(MonoCAM)
+project(MonoCAM LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH "bin")
 
-set(HDRS app_utils.h monocam_ux.h mono_cap.h)
-set(CPPS app_utils.cc monocam_ux.cc mono_cap.cc)
+set(HDRS app_utils.h monocam_ux.h mono_cap.h resources.h)
+set(CPPS app_utils.cc monocam_ux.cc mono_cap.cc resources.c)
 
 find_package(PkgConfig)
 pkg_check_modules(GTKMM REQUIRED IMPORTED_TARGET gtkmm-4.0)

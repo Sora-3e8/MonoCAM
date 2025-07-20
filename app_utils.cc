@@ -1,5 +1,14 @@
 #include "app_utils.h"
 
+std::string apputils::datetime(const char* format)
+{
+  char time_formatted[100];
+  const std::time_t ctime_raw = std::time(nullptr);
+  std::strftime(time_formatted,sizeof(time_formatted),format,std::localtime(&ctime_raw));
+
+  return std::string(time_formatted);
+}
+
 std::string apputils::osutils::OSNAME()
 {
     #ifdef _WIN32
@@ -38,7 +47,6 @@ std::string apputils::osutils::OSTYPE()
   {
     return "UNIX";
   }
-
   if(apputils::osutils::OSNAME().find("Mac OSX")!=std::string::npos)
   {
     return "UNIX";

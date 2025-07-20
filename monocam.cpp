@@ -6,12 +6,9 @@
 #include "mono_cap.h"
 #include <ctime>
 
-
 std::shared_ptr<Gtk::Application> app;
 CamWindow *cam_window;
 std::shared_ptr<camera_stream> cam;
-
-
 
 // Default camera parameters
 const int default_cam_index = 0;
@@ -21,8 +18,7 @@ const int default_cam_fps = 30;
 
 // Default image save folder under $HOMEDIR
 const std::string default_savepath = "Pictures/";
-std::string default_filename = "image.png";
-
+const std::string default_filextension = ".png";
 // Triggers on application launch
 void on_activate()
 {
@@ -44,10 +40,10 @@ void on_activate()
 void CamWindow::on_btn_clicked()
 { 
   //Returns if saving image failed or succeeded
-  std::string timecode = std::put_time(std::localtime(), "%b%e%Y%H%M%S");
-  std::string file_path = apputils::osutils::HOMEDIR()+"/"+default_savepath+"image"+timecode+".png"
+  std::string timecode = apputils::datetime("%d-%m-%Y-%H-%M");
+  std::string file_path = apputils::osutils::HOMEDIR()+"/"+default_savepath+timecode+default_filextension;
   bool save_success = cam->save_image(file_path);
-  std::cout << ( (save_success==true) ? "Image saved." : "Failed to save image path: "+file_path) << std::endl;
+  std::cout << ( (save_success==true) ? "Image saved:" : "Failed to save image path: ") << file_path << std::endl;
 }
 
 int main(int argc, char* argv[])

@@ -24,6 +24,7 @@ void camera_stream::start_stream()
   std::thread t_cam = std::thread(sigc::mem_fun(*this,&camera_stream::frame_loop));
   t_cam.detach();
 }
+
 void camera_stream::stop_stream()
 {
   _keep_frame_loop = false;

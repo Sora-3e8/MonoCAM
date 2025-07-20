@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="resources">
+    <file>images/no_camera.png</file>
+  </gresource>
+  <gresource prefix="resources">
+    <file>icons/camera-shutter-symbolic.svg</file>
+    <file>icons/cogged-wheel-symbolic.svg</file>
+  </gresource>
+</gresources>
+

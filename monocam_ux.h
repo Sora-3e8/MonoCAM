@@ -8,6 +8,8 @@ class CamWindow : public Gtk::Window
 { 
 
 public:
+    Gtk::HeaderBar header;
+    Gtk::Button settings_button;
     Gtk::Overlay overlay_layer;
     Gtk::Box overlay_container;
     Gtk::Button photo_button;
@@ -16,8 +18,9 @@ public:
     Glib::RefPtr<Gdk::Pixbuf> image_nocam;
     CamWindow();
     ~CamWindow() override;
-
+    void load_icons();
     void set_feed_source(cv::Mat *source);
+
 
   protected:
     void on_btn_clicked();

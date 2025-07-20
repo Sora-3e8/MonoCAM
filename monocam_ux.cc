@@ -1,9 +1,32 @@
 #include "monocam_ux.h"
+#include <iostream>
+#include <fstream>
+#include "resources.h"
+#include "resources.c"
+extern GResource *gresources_get_resource(void);
+
+void CamWindow::load_icons()
+{
+  auto icon_theme = Gtk::IconTheme::get_for_display(Gdk::Display::get_default());
+  icon_theme->add_resource_path("/resources/icons/");
+  icon_theme->add_search_path("/resources/icons/");
+  std::ofstream dump_file = std::ofstream("icon-dump.txt");
+  dump_file << "Icons:"<< std::endl;
+  for (std::string icon: icon_theme->get_icon_names())
+  {
+    dump_file <<  icon << std::endl;
+  }
+  dump_file.close();
+}
 
 // CamWindow: Gtk::Window init override
 CamWindow::CamWindow()
 {
+  g_resources_register(resources_get_resource());
+  load_icons();
+  set_title("MonoCAM");
   // Widget creation
+  header = Gtk::HeaderBar();
   overlay_layer =  Gtk::Overlay();
   overlay_container = Gtk::Box();
   cam_view = Gtk::Picture();
@@ -13,7 +36,7 @@ CamWindow::CamWindow()
   // Load resources
   try
   {
-    image_nocam = Gdk::Pixbuf::create_from_file("resources/images/no_camera.png");
+    image_nocam = Gdk::Pixbuf::create_from_resource("/resources/images/no_camera.png");
   }
   catch(std::exception &e)
   {
@@ -22,6 +45,8 @@ CamWindow::CamWindow()
   // Load resources
   
   // Widget configuration
+
+  settings_button = Gtk::Button();
   overlay_container.set_orientation(Gtk::Orientation::VERTICAL);
   cam_view.set_hexpand(true);
   cam_view.set_vexpand(true);
@@ -31,12 +56,15 @@ CamWindow::CamWindow()
   photo_button.set_hexpand(false);
   photo_button.set_vexpand(false);
   photo_button.set_halign(Gtk::Align::CENTER);
-  photo_button.set_label("Take image");
+  photo_button.set_icon_name("camera-shutter-symbolic");
   photo_button.add_css_class("bottom");
   cam_view.set_pixbuf(image_nocam);
   // Widget configuration
 
   // Add widgets to the layout
+  set_titlebar(header);
+  settings_button.set_icon_name("org.gnome.Settings-symbolic");
+  header.pack_end(settings_button);
   overlay_layer.set_child(cam_view);
   overlay_layer.add_overlay(overlay_container);
   overlay_container.append(photo_button);
