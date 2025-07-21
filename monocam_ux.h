@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include <string>
 
+void load_resources();
 
 class CamWindow : public Gtk::Window
 { 
@@ -18,7 +19,7 @@ public:
     Glib::RefPtr<Gdk::Pixbuf> image_nocam;
     CamWindow();
     ~CamWindow() override;
-    void load_icons();
+
     void set_feed_source(cv::Mat *source);
 
 
@@ -29,7 +30,6 @@ public:
   private:
     cv::Mat *image_source;
     Glib::RefPtr<Gdk::Pixbuf> image_buffer;
-
 
 };
 

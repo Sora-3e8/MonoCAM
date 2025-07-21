@@ -22,6 +22,8 @@ const std::string default_filextension = ".png";
 // Triggers on application launch
 void on_activate()
 {
+  load_resources();
+
   // Creates new window
   cam_window = new CamWindow();
   cam_window->present();

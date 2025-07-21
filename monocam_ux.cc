@@ -3,28 +3,31 @@
 #include <fstream>
 #include "resources.h"
 #include "resources.c"
+
 extern GResource *gresources_get_resource(void);
 
-void CamWindow::load_icons()
+void load_resources()
 {
-  auto icon_theme = Gtk::IconTheme::get_for_display(Gdk::Display::get_default());
+  std::shared_ptr<Gdk::Display> current_display = Gdk::Display::get_default();
+  std::shared_ptr<Gtk::IconTheme> icon_theme =  Gtk::IconTheme::get_for_display(current_display);
+  // Adds resource prefixes to the icon theme 
   icon_theme->add_resource_path("/resources/icons/");
   icon_theme->add_search_path("/resources/icons/");
-  std::ofstream dump_file = std::ofstream("icon-dump.txt");
-  dump_file << "Icons:"<< std::endl;
-  for (std::string icon: icon_theme->get_icon_names())
-  {
-    dump_file <<  icon << std::endl;
-  }
-  dump_file.close();
+  // Creates new CSS style
+  std::shared_ptr<Gtk::CssProvider> app_style = Gtk::CssProvider::create();
+  app_style->load_from_resource("/resources/styles/style.css");
+  Gtk::StyleContext::add_provider_for_display(current_display, app_style, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+
 }
 
 // CamWindow: Gtk::Window init override
 CamWindow::CamWindow()
 {
   g_resources_register(resources_get_resource());
-  load_icons();
   set_title("MonoCAM");
+  set_icon_name("monocam-app-icon");
+  set_default_icon_name("monocam-app-icon");
   // Widget creation
   header = Gtk::HeaderBar();
   overlay_layer =  Gtk::Overlay();
