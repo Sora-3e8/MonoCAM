@@ -14,6 +14,8 @@ Requirements
 - cmake
 - gtk4
 - opencv
+  - vtk
+  - hdf5
 
 Build
 ---------------
@@ -21,5 +23,6 @@ Build
 git clone https://github.com/Sora-3e8/MonoCAM
 mkdir build
 cd build && cmake ..
+make
 ```
 
