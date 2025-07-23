@@ -5,9 +5,9 @@ Based on GTK 4.0 and OpenCV 2.
 
 Supported platforms
 ---------------
-Linux
-Mac OS (untested)
-Windows (wip)
+- Linux
+- Mac OS (untested)
+- Windows (wip)
 
 Requirements
 ---------------
