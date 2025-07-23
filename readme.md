@@ -11,9 +11,9 @@ Windows (wip)
 
 Requirements
 ---------------
-cmake
-gtk4
-opencv
+- cmake
+- gtk4
+- opencv
 
 Build
 ---------------
