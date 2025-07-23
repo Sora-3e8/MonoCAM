@@ -31,7 +31,6 @@ find_package(OpenCV REQUIRED)
 
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
 include_directories( ${GTKMM_INCLUDE_DIRS} )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 add_custom_target(GenerateResources DEPENDS  ${RESOURCE_C_FILE} ${RESOURCE_H_FILE})
 add_executable(MonoCAM monocam.cpp ${HDRS} ${CPPS} ${RESOURCE_C_FILE} ${RESOURCE_H_FILE})
