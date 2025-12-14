@@ -12,8 +12,8 @@ std::shared_ptr<camera_stream> cam;
 
 // Default camera parameters
 const int default_cam_index = 0;
-const int default_cam_width = 480;
-const int default_cam_height = 360;
+const int default_cam_width = 640;
+const int default_cam_height = 480;
 const int default_cam_fps = 30;
 
 // Default image save folder under $HOMEDIR
@@ -30,7 +30,7 @@ void on_activate()
   app->add_window(*cam_window);
 
   // Initializes camera with default config
-  cam = std::make_shared<camera_stream>(default_cam_index, default_cam_width, default_cam_height,default_cam_fps);
+  cam = std::make_shared<camera_stream>(default_cam_index, default_cam_width, default_cam_height,default_cam_fps,true);
   
   // Provides pointer to the cam_window to know where to read new frames from
   cam_window->set_feed_source(&cam->frame);

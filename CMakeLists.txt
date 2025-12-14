@@ -7,6 +7,10 @@ set(EXECUTABLE_OUTPUT_PATH "bin")
 set(RESOURCE_C_FILE "${CMAKE_CURRENT_BINARY_DIR}/resources.c")
 set(RESOURCE_H_FILE "${CMAKE_CURRENT_BINARY_DIR}/resources.h")
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -D__DEBUG__")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+
+
 add_custom_command(
     OUTPUT ${RESOURCE_C_FILE}
     COMMAND glib-compile-resources --sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/resources --target ${RESOURCE_C_FILE} --generate-source ${CMAKE_CURRENT_SOURCE_DIR}/resources.gresource.xml
@@ -36,7 +40,7 @@ add_custom_target(GenerateResources DEPENDS  ${RESOURCE_C_FILE} ${RESOURCE_H_FIL
 add_executable(MonoCAM monocam.cpp ${HDRS} ${CPPS} ${RESOURCE_C_FILE} ${RESOURCE_H_FILE})
 add_dependencies(MonoCAM GenerateResources)
 
-target_link_libraries(MonoCAM PRIVATE PkgConfig::GTKMM)
+target_link_libraries(MonoCAM PRIVATE ${GTKMM_LIBRARIES})
 target_link_libraries(MonoCAM PRIVATE ${OpenCV_LIBS} )
 
 

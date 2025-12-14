@@ -7,7 +7,7 @@ Supported platforms
 ---------------
 - Linux
 - Mac OS (untested)
-- Windows (wip)
+- Windows (TBD)
 
 Requirements
 ---------------
@@ -22,7 +22,7 @@ Build
 ```
 git clone https://github.com/Sora-3e8/MonoCAM
 mkdir build
-cd build && cmake ..
-make
+cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
 ```
 
