@@ -79,17 +79,16 @@ CamWindow::CamWindow()
 
 CamWindow::~CamWindow(){}
 
-void CamWindow::set_feed_source(cv::Mat* source)
+void CamWindow::set_feed_source(camera_stream* cam)
 {
-  image_source = source;
+  this->cam = cam;
 }
 
 bool CamWindow::update_feed()
 {
-  if(image_source->empty() == false)
+  if(cam->frame_valid == true)
   {
-    auto image_src = *image_source;
-    image_buffer = Gdk::Pixbuf::create_from_data(image_src.data, Gdk::Colorspace::RGB,false, 8, image_src.cols, image_src.rows, image_src.step);
+    image_buffer = Gdk::Pixbuf::create_from_data(cam->frame.data, Gdk::Colorspace::RGB,false, 8, cam->frame.cols, cam->frame.rows, cam->frame.step);
     cam_view.set_pixbuf(image_buffer); 
   }
   else

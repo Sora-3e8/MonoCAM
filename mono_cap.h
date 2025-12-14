@@ -4,6 +4,7 @@
 #include <opencv2/core/hal/interface.h>
 #include <sigc++/sigc++.h>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/core/utils/logger.hpp>
 #include <mutex>
 
 class camera_stream
@@ -14,6 +15,7 @@ class camera_stream
     void stop_stream();
     bool save_image(std::string filepath);
     cv::Mat frame;
+    bool frame_valid;
 
   private:
     int capture_fps;
@@ -22,10 +24,13 @@ class camera_stream
     int device_index;
     int cam_backend;
     bool mirror;
+    bool cam_available();
     bool _keep_frame_loop = false;
     cv::VideoCapture device;
     cv::Mat _frame;
     cv::Mat _frame2;
+
     std::mutex frame_mutex;
+    void await_camera();
     void frame_loop();
 };

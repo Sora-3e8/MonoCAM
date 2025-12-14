@@ -2,6 +2,7 @@
 #include <gtkmm.h>
 #include <bits/stdc++.h>
 #include <string>
+#include "mono_cap.h"
 
 void load_resources();
 
@@ -20,7 +21,7 @@ public:
     CamWindow();
     ~CamWindow() override;
 
-    void set_feed_source(cv::Mat *source);
+    void set_feed_source(camera_stream* cam);
 
 
   protected:
@@ -28,7 +29,7 @@ public:
     bool update_feed();
 
   private:
-    cv::Mat *image_source;
+    camera_stream* cam;
     Glib::RefPtr<Gdk::Pixbuf> image_buffer;
 
 };
